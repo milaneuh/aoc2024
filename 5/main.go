@@ -10,7 +10,7 @@ import (
 )
 
 type Pair struct {
-	left int
+	left  int
 	right int
 }
 
@@ -21,15 +21,15 @@ func main() {
 	part1 := 0
 	part2 := 0
 
-	for _,row := range matrix {
-	 	reOrderedRow := reOrderRow(row,pairs)
-		if slices.Equal(reOrderedRow,row) {
-			part1 += row[(len(row)/2)]
-		}else {
-			part2 += reOrderedRow[(len(reOrderedRow)/2)]
+	for _, row := range matrix {
+		reOrderedRow := reOrderRow(row, pairs)
+		if slices.Equal(reOrderedRow, row) {
+			part1 += row[(len(row) / 2)]
+		} else {
+			part2 += reOrderedRow[(len(reOrderedRow) / 2)]
 		}
-	} 
-	
+	}
+
 	fmt.Println(part1)
 	fmt.Println(part2)
 }
@@ -37,18 +37,18 @@ func main() {
 func reOrderRow(row []int, pairs []Pair) []int {
 	flag := true
 	reOrderedRow := slices.Clone(row)
-	for index,num := range row {
-		for _,pair :=  range pairs {
-			if(pair.left == num){
-				rightIndex := slices.Index(row,int(pair.right))
-				if(flag && rightIndex != -1 && rightIndex <  index){
+	for index, num := range row {
+		for _, pair := range pairs {
+			if pair.left == num {
+				rightIndex := slices.Index(row, int(pair.right))
+				if flag && rightIndex != -1 && rightIndex < index {
 					flag = false
 					reOrderedRow[rightIndex] = num
 					reOrderedRow[index] = pair.right
 				}
-			}else if(pair.right == num){
-				leftIndex := slices.Index(row,int(pair.left))
-				if(flag && leftIndex != -1 && leftIndex >  index){
+			} else if pair.right == num {
+				leftIndex := slices.Index(row, int(pair.left))
+				if flag && leftIndex != -1 && leftIndex > index {
 					flag = false
 					reOrderedRow[leftIndex] = num
 					reOrderedRow[index] = pair.left
@@ -56,9 +56,9 @@ func reOrderRow(row []int, pairs []Pair) []int {
 			}
 		}
 	}
-	if(!flag){
-		return reOrderRow(reOrderedRow,pairs)
-	}else {
+	if !flag {
+		return reOrderRow(reOrderedRow, pairs)
+	} else {
 		return reOrderedRow
 	}
 }
@@ -99,3 +99,4 @@ func ParseFile(filePath string) ([]Pair, [][]int, error) {
 	}
 	return pairs, matrix, nil
 }
+
